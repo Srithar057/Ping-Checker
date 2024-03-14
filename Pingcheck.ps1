@@ -6,8 +6,8 @@ $MAGENTA = [ConsoleColor]::Magenta
 
 $total_ips = (Get-Content $args[0] | Measure-Object -Line).Lines
 
-$successful_ips = @()
-$failed_ips = @()
+$reached = @()
+$unreached = @()
 
 # Function to check the reachability of IPs
 function Ping-Check {
@@ -17,28 +17,28 @@ function Ping-Check {
     Get-Content $args[0] | ForEach-Object {
         $ip = $_
         if (Test-Connection -Count 1 -ComputerName $ip -Quiet) {
-            $successful_ips += $ip
+            $reached += $ip
         }
         else {
-            $failed_ips += $ip
+            $unreached += $ip
         }
     }
     # Linkedin - https://in.linkedin.com/in/sritharparthasarathi
     Write-Host "Reached IPs:"
-    $successful_ips | ForEach-Object {
+    $reached_ips | ForEach-Object {
         Write-Host "$($_)" -ForegroundColor Green
     }
 
     Write-Host ""
     Write-Host "Unreached IPs:"
-    $failed_ips | ForEach-Object {
+    $unreached | ForEach-Object {
         Write-Host "$($_)" -ForegroundColor Red
     }
 
     Write-Host "--------------------"
     Write-Host "Results Count:"
-    Write-Host "Success : $($successful_ips.Count)/$total_ips" -ForegroundColor Green
-    Write-Host "Failed  : $($failed_ips.Count)/$total_ips" -ForegroundColor Red
+    Write-Host "Success : $($reached.Count)/$total_ips" -ForegroundColor Green
+    Write-Host "Failed  : $($unreached.Count)/$total_ips" -ForegroundColor Red
     Write-Host "--------------------"
     Write-Host ""
     Write-Host "Github: https://github.com/Srithar057" -ForegroundColor Magenta
