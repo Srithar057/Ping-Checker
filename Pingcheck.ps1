@@ -8,8 +8,6 @@ $total_ips = (Get-Content $args[0] | Measure-Object -Line).Lines
 
 $reached = @()
 $unreached = @()
-
-# Function to check the reachability of IPs
 function Ping-Check {
     Write-Host ""
     # Linkedin - https://in.linkedin.com/in/sritharparthasarathi
@@ -25,7 +23,7 @@ function Ping-Check {
     }
     # Linkedin - https://in.linkedin.com/in/sritharparthasarathi
     Write-Host "Reached IPs:"
-    $reached_ips | ForEach-Object {
+    $reached | ForEach-Object {
         Write-Host "$($_)" -ForegroundColor Green
     }
 
